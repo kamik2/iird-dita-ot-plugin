@@ -2,11 +2,11 @@
 
 Date: 25 November 2026. Toolkit: DITA-OT 4.4.2, isolated in `.work/dita-ot-4.4.2`.
 Runtime/build JDK: Eclipse Temurin 25. Java compilation targets release 17.
-No existing host toolkit was modified.
+The plug-in was subsequently installed into the user-requested Oxygen XML Editor 29 bundled DITA-OT 4.4.1 using that toolkit's own installer. See `OXYGEN_DEPLOYMENT.md`.
 
 ## Automated results
 
-* Maven: **30 tests**, no failures or errors (28 inherited tests plus two schema/overlay tests).
+* Maven: **37 tests**, no failures or errors (28 inherited tests, two schema/overlay tests, and seven language tests).
 * Installation of the standalone ZIP with `--force` succeeded; all three transformation types registered.
 * **19 integration checks passed**, via `python scripts/verify.py .work/dita-ot-4.4.2`.
 * Each of the five versioned RDF files and the combined manifest produced both
@@ -14,6 +14,7 @@ No existing host toolkit was modified.
   covered by the combined output; generated taxonomy keys were unique.
 * DITA-OT validated the combined subject scheme as DITA.
 * German label selection and custom HTML reference stylesheet URL were checked.
+* An additional **19 language precedence checks passed on each toolkit**, standalone 4.4.2 and Oxygen-bundled 4.4.1: explicit export override, source `xml:lang`, English fallback, topic/map/bookmap input, native RDF/manifest input, mixed-language topics, and unchanged authored input bytes.
 * The all-domain DITA map produced Core, Machinery, Software, and Handover metadata.
 * The additional RDF graph merged correctly, including bound input/package IRIs
   and the Unicode revision value `Ãœberarbeitung A`.
@@ -36,7 +37,7 @@ The transformation reference README was checked against all parameters and enume
 
 These are structural, unit and toolkit runtime checks. No full independent iiRDS
 semantic/cardinality validator, external consumer import, production deployment,
-Oxygen Author integration, PDF/A rendering or iiRDS/A/H conformance assessment was
+Oxygen Author/UI rendering, PDF/A rendering or iiRDS/A/H conformance assessment was
 performed. HTML output and CSS assets were checked structurally; visual browser
 review has not been performed. Java 17 is the compilation target; the runtime
 checks used Java 25. The iiRDS 1.3 standard's authoring and conformance requirements
@@ -49,4 +50,6 @@ used this helper. Standard `dita install` also succeeded initially. The stock
 launcher was not retested from a shorter installation path.
 
 Logs and generated test artifacts are under `.work/verification/`, with
-`results.json` recording the successful checks. Maven logs are under `.work/`.
+`results.json` recording the successful checks. Additional reports are in
+`.work/language-verification/`, `.work/oxygen-verification/`, and
+`.work/oxygen-language-verification/`. Maven logs are under `.work/`.

@@ -19,7 +19,7 @@
                         </row>
                     </thead>
                     <tbody>
-                        <row><entry>1.2.0</entry><entry>Local development build, 2026-11</entry><entry>DITA-OT 4.4.2 runtime support; all five exact iiRDS 1.3 schemas; native RDF subject scheme and HTML transformations; optional structured RDF metadata overlay; refreshed subject scheme and verification.</entry></row>
+                        <row><entry>1.2.0</entry><entry>Local development build, 2026-11</entry><entry>DITA-OT 4.4.1/4.4.2 runtime support; automatic source-language selection with explicit export overrides and English fallback; all five exact iiRDS 1.3 schemas; native RDF subject scheme and HTML transformations; optional structured RDF metadata overlay; refreshed subject scheme and verification.</entry></row>
                         <row>
                             <entry>1.1.0</entry>
                             <entry>2026-08</entry>
