@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE reference PUBLIC "-//OASIS//DTD DITA Reference//EN" "reference.dtd">
-<reference id="requirements">
-    <title>Requirements</title>
-    <refbody>
-        <section>This plugin was developed and tested with DITA-OT 3.7.3 and DITA-OT 4.1.1. To
-            guarantee that this plugin works, the following versions are required:<ul>
-                <li>DITA-OT 3.7.x or later</li>
-                <li>Java (version according to DITA-OT requirements)</li>
-            </ul>The plugin can be used with a default version of the DITA-OT or a customized
-            DITA-OT version with specialized document type definitions and modified transformation
-            scenarios. </section>
-    </refbody>
-</reference>
+<reference id="requirements"><title>Requirements</title><refbody><section>
+ <p>Local version 1.2.0 requires DITA-OT 4.4.2 or newer and Java 17 or newer.
+ Runtime verification uses DITA-OT 4.4.2 with Java 25. Newer toolkits require fresh verification.</p>
+ <p>The Maven build uses the DOST 4.3.0 API artifact because this is the latest API
+ artifact available on Maven Central. The runtime distribution tested is 4.4.2.</p>
+ <p>Install the standalone plug-in ZIP into a chosen toolkit. Oxygen integration and
+ custom host frameworks have not been tested as part of this local build.</p>
+</section></refbody></reference>

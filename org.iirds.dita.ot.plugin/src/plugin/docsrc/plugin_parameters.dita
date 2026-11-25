@@ -3,6 +3,7 @@
 <reference id="plugin-parameters">
     <title>Plugin parameters</title>
     <refbody>
+        <section><title>Additional local 1.2.0 parameters</title><p>For <codeph>iirds</codeph>, <codeph>--iirds.metadata.file=ABSOLUTE_PATH</codeph> merges an RDF/XML graph. The IRIs <codeph>urn:iirds:input</codeph> and <codeph>urn:iirds:package</codeph> bind to the generated input resource and Package. The author remains responsible for property cardinalities and semantic validity.</p><p>The native RDF transformations accept <codeph>--iirds.language=de</codeph>. The HTML vocabulary reference also accepts <codeph>--iirds.schema.css=URL</codeph>.</p></section>
         <section>
             <p>The following  command-line parameters are provided by the iiRDS plugin:</p>
             <parml>

@@ -1,13 +1,13 @@
 # iiRDS Plugin for DITA Open Toolkit
 
-Version 1.1.0, August 2026
+Version 1.2.0, local development build, November 2026
 
 * Generates an iiRDS 1.3 package from a map or a single topic
 * The resulting file is ``<file name of map or topic>.iirds``
 * DITA-OT transtype: ``iirds``
 * Content is rendered as HTML5
 * Parameters of the ``html5`` transtype can be used to customize HTML output
-* Requires DITA-OT version >= 3.7.3; tested with versions 3.7.1 and 4.1.1
+* Requires DITA-OT 4.4.2 and Java 17 or newer; runtime checks use DITA-OT 4.4.2 and Java 25.
 
 For more information, visit [https://www.iirds.org/tools/dita-plugin/](https://www.iirds.org/tools/dita-plugin/)
 
@@ -21,10 +21,24 @@ This plugin is licensed under the Apache 2.0 license. See the LICENSE file inclu
 
 There are several options for installing the plugin:
 
-* To install from the download page, run ``dita install https://www.iirds.org/fileadmin/downloads/DITA/org.iirds.dita.package-1.1.0.zip``
-* To install from the DITA-OT plugin registry, run ``dita install org.iirds.dita.package``
-* To install from a downloaded plugin ZIP file, run ``dita install org.iirds.dita.package-1.1.0.zip``.
+* To install this local build, run ``dita install org.iirds.dita.package-1.2.0.zip``
+* The DITA-OT registry installs the consortium release, not this local development build.
+* To install from a downloaded plugin ZIP file, run ``dita install org.iirds.dita.package-1.2.0.zip``.
   If the ZIP file is not located in the current working directory, include the path to the file.
+
+## Additional transformations in this local build
+
+* `iirds-subjectscheme`: native RDF/XML or `schemas/iirds-1.3.xml` manifest to `subjectscheme.ditamap`.
+* `iirds-schema-html`: native RDF/XML or manifest to `index.html` with `schema.css`.
+* Both accept `--iirds.language=de`; the HTML reference accepts `--iirds.schema.css=URL`.
+* The five unchanged, official iiRDS 1.3 RDF files are in `schemas/`; all five also load at runtime.
+* `--iirds.metadata.file=ABSOLUTE_PATH` merges an additional RDF/XML graph before packaging.
+  Its `urn:iirds:input` and `urn:iirds:package` resources bind to the generated input and Package.
+  This supports structured metadata and arbitrary schema properties beyond taxonomy tags.
+* See `examples/all-domains/` and the source, validation, and third-party notices in `docs/`.
+* Output packages are unrestricted iiRDS 1.3. Handover vocabulary use alone does not establish iiRDS/H conformance.
+
+See [README_TRANSFORMATIONS.md](README_TRANSFORMATIONS.md) in the installed package for all transformations, parameter values, defaults, and examples. In a source checkout, this reference is at the repository root.
 
 ## Creating iiRDS Packages
 
@@ -77,7 +91,7 @@ The plugin comes with a number of predefined metadata handlers for extracting ad
 * ``audience``: Use the ``audience`` element to set ``iirds:relates-to-qualification`` properties
 * ``audience-p``: Use the content of the ``audience`` root attribute as ``iirds:relates-to-qualification`` properties
 * ``subjectscheme``: Use ``subjectdef`` elements referenced by ``data``  elements by ``keyref`` from within ``topicmeta``. 
-* ``default``: Apply all metadata handlers. Allows to combine custom metadata handlers with the default handlers.
+* ``all``: Select all registered metadata handlers when used alone or when no valid named handler remains. There is no registered metadata handler named ``default``.
 
 When not explicitly specified on the command line via the ``--iirds.metadatahandler`` parameter, all available metadata handlers are applied 
 to extract iiRDS metadata from DITA. Additional DITA-OT plugins may register further metadata handlers, which are also taken into account.

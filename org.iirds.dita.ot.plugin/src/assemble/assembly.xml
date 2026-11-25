@@ -9,17 +9,34 @@
 	<formats>
 		<format>zip</format>
 	</formats>
-	<includeBaseDirectory>false</includeBaseDirectory>
+	<includeBaseDirectory>true</includeBaseDirectory>
+	<baseDirectory>org.iirds.dita.package</baseDirectory>
 	<fileSets>
+		<fileSet>
+			<outputDirectory>/docs</outputDirectory>
+			<directory>../docs</directory>
+		</fileSet>
+		<fileSet>
+			<outputDirectory>/schemas</outputDirectory>
+			<directory>src/main/resources</directory>
+			<includes><include>*.rdf</include></includes>
+		</fileSet>
 		<fileSet>
 			<outputDirectory>/</outputDirectory>
 			<directory>src/plugin</directory>
+			<excludes><exclude>iirds_plugin.pdf</exclude></excludes>
 		</fileSet>
 		<fileSet>
 			<outputDirectory>/apidocs</outputDirectory>
 			<directory>${project.build.directory}/site/apidocs</directory>
 		</fileSet>
 	</fileSets>
+	<files>
+		<file>
+			<source>../README_TRANSFORMATIONS.md</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+	</files>
 	<dependencySets>
 		<dependencySet>
 			<outputDirectory>/lib</outputDirectory>
