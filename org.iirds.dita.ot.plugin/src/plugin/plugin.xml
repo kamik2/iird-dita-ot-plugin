@@ -1,5 +1,6 @@
-<plugin id="org.iirds.dita.package" version="1.1.0">
+<plugin id="org.iirds.dita.package" version="1.2.0">
   <require plugin="org.dita.html5"/>
+  <require plugin="org.dita.base" version=">=4.4.2"/>
   <feature extension="dita.conductor.lib.import" file="lib/collection.jar"/>
   <feature extension="dita.conductor.lib.import" file="lib/commons-cli.jar"/>
   <feature extension="dita.conductor.lib.import" file="lib/commons-codec.jar"/>
@@ -23,18 +24,28 @@
   
   <!-- define iiRDS transformation: -->  
   <transtype name="iirds" extends="html5" desc="Creates an iiRDS publication package">
-  	<param name="iirds.metadatahandler" desc="Plus character separated list of metadata handlers to be used to generate iiRDS metadata from DITA" type="string">
-  		<val default="all"/>
-  	</param>
-  	<param name="iirds.irihandler" desc="Plus character separated list of IRI handlers to be used to generate IRIs for information units and metadata" type="string">
-  		<val default="all"/>
-  	</param>
-  	<param name="iirds.contentpath" desc="Relative path within the iiRDS package where the content files get stored" type="string">
-  		<val default="content"/>
-  	</param> 
-	<param name="args.outext" desc="Specifies the file extension for HTML5 output." type="string">
-		<val default="true">html</val>
-	</param>  	
+    <param name="iirds.metadata.file" desc="Absolute path to an additional RDF/XML metadata graph; urn:iirds:input and urn:iirds:package bind to generated resources" type="file"/>
+    <param name="iirds.metadatahandler" desc="Plus character separated list of metadata handlers to be used to generate iiRDS metadata from DITA" type="string">
+      <val default="all"/>
+    </param>
+    <param name="iirds.irihandler" desc="Plus character separated list of IRI handlers to be used to generate IRIs for information units and metadata" type="string">
+      <val default="default"/>
+    </param>
+    <param name="iirds.contentpath" desc="Relative path within the iiRDS package where the content files get stored" type="string">
+      <val default="content"/>
+    </param>
+  <param name="args.outext" desc="Specifies the file extension for HTML5 output." type="string">
+    <val default="true">html</val>
+  </param>
+  </transtype>
+
+  <!-- Native RDF pipelines do not run DITA preprocessing. -->
+  <transtype name="iirds-subjectscheme" desc="RDF/XML schema to a DITA subject scheme">
+    <param name="iirds.language" type="string" desc="Preferred vocabulary label language"/>
+  </transtype>
+  <transtype name="iirds-schema-html" desc="RDF/XML schema to an HTML vocabulary reference">
+    <param name="iirds.language" type="string" desc="Preferred vocabulary label language"/>
+    <param name="iirds.schema.css" type="string" desc="URL of a project stylesheet for the RDF vocabulary reference"/>
   </transtype>
   
   <!-- extension points implemented by this plugin: -->

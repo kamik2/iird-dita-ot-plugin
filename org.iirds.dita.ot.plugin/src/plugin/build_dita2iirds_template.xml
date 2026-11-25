@@ -76,6 +76,7 @@
 		<pipeline message="Extract iiRDS metadata" taskname="iirds.extractMetadata" inputmap="${user.input.file}">
 			<module class="org.iirds.dita.ot.plugin.module.IirdsGenerationModuleImpl" parallel="false">
 				<param name="transtype" value="${transtype}" />
+				<param name="METADATAFILE" value="${iirds.metadata.file}" if:set="iirds.metadata.file"/>
 				<param name="METADATAHANDLERS" value="${iirds.metadatahandler}" if:set="iirds.metadatahandler" />
 				<param name="IRIHANDLERS" value="${iirds.irihandler}" if:set="iirds.irihandler" />
 				<param name="CONTENTPATH" value="${iirds.contentpath}" if:set="iirds.contentpath" />
@@ -84,4 +85,19 @@
 		</pipeline>
 	</target>
 
+<!-- Native RDF/XML pipelines: intentionally bypass DITA preprocessing. -->
+ <target name="dita2iirds-subjectscheme" depends="build-init">
+  <mkdir dir="${output.dir}"/>
+  <xslt in="${args.input}" out="${output.dir}/subjectscheme.ditamap" style="${dita.plugin.org.iirds.dita.package.dir}/xsl/schema-subjectscheme.xsl" force="true">
+   <param name="iirds.language" expression="${iirds.language}" if="iirds.language"/>
+  </xslt>
+ </target>
+ <target name="dita2iirds-schema-html" depends="build-init">
+  <mkdir dir="${output.dir}"/>
+  <xslt in="${args.input}" out="${output.dir}/index.html" style="${dita.plugin.org.iirds.dita.package.dir}/xsl/schema-html.xsl" force="true">
+   <param name="iirds.language" expression="${iirds.language}" if="iirds.language"/>
+   <param name="iirds.schema.css" expression="${iirds.schema.css}" if="iirds.schema.css"/>
+  </xslt>
+  <copy file="${dita.plugin.org.iirds.dita.package.dir}/css/schema.css" tofile="${output.dir}/schema.css"/>
+ </target>
 </project>
