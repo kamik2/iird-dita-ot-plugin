@@ -16,6 +16,8 @@
 
 package org.iirds.dita.ot.plugin.module;
 
+// Local modifications (2026): Use the instance-based DITA-OT XMLUtils API.
+
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -50,7 +52,7 @@ class DefaultIriProviderTest {
 
 	private ToCNode setupToCNode(String path) throws Exception {
 		URL url = getClass().getResource(path);
-		Document doc = XMLUtils.getDocumentBuilder().parse(new File(url.toURI()));
+		Document doc = new XMLUtils().getDocumentBuilder().parse(new File(url.toURI()));
 		ToCNode node = new ToCNode(url.toURI());
 		node.setTopicId(doc.getDocumentElement().getAttribute("id"));
 		node.setContentHash(hasher.getHash(doc.getDocumentElement()));
