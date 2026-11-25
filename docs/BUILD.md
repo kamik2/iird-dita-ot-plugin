@@ -21,6 +21,9 @@ not a plug-in runtime dependency. Recheck both files against the official
 CycloneDX 1.6 JSON Schema and XSD after an inventory change. Rebuilding packages
 the committed documentation and both inventories under `docs/`.
 
+Language precedence checks: `python scripts/verify_language.py PATH_TO_TOOLKIT`.
+The launcher also recognizes Oxygen's `lib/saxon` and DOST patch libraries.
+
 Use the isolated installation and integration commands in the repository README
 before delivering a rebuilt ZIP. Read the validation limits in `VALIDATION.md`.
 

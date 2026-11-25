@@ -3,7 +3,7 @@
 Local development version **1.2.0**, based on the consortium's latest source revision
 `969eb4e1d3459b1cb3e7d2a6210b458c53109935`. This is a local extension, not a consortium-published release.
 
-Targets **DITA-OT 4.4.2** and Java 17 or newer. Verification uses Java 25.
+Supports **DITA-OT 4.4.1 and 4.4.2** with Java 17 or newer. Verification uses Java 25.
 iiRDS remains pinned to **1.3**.
 
 | Transformation | Input | Output |
@@ -35,7 +35,7 @@ consortium extension example; it is not needed by this plug-in.
 
 The Java code compiles against the latest DOST API artifact available on Maven
 Central, 4.3.0; the installable package is tested on the current toolkit distribution,
-4.4.2. The descriptor therefore requires DITA-OT 4.4.2 or newer. Later releases require
+4.4.2. The descriptor requires DITA-OT 4.4.1 or newer, including Oxygen 29's bundled toolkit. Later releases require
 fresh runtime testing.
 
 ## Publish
@@ -57,6 +57,12 @@ The normal HTML5 parameters apply, for example `--args.css=project.css --args.co
 Use `--iirds.contentpath=files` to change the archive's content directory and
 `--args.outext=htm` to change the HTML extension.
 
+For `iirds`, omit `--default.language` to detect the language from the input topic,
+map, or bookmap's root `xml:lang`, with `en` as the final fallback. An explicit
+`--default.language=de` overrides generated root languages and iiRDS language
+metadata. Topic-specific authored languages are preserved when no override is set.
+This changes language settings without translating or modifying authored files.
+
 ## Transform the RDF schemas
 
 Replace `DITA-OT` with your toolkit directory:
@@ -67,8 +73,9 @@ dita -i DITA-OT/plugins/org.iirds.dita.package/schemas/iirds-1.3.xml -f iirds-sc
 # Any of the five individual .rdf files can also be used as input.
 ```
 
-Both native transformations accept `--iirds.language=de` (default: English, with
-fallback labels). The HTML reference accepts `--iirds.schema.css=https://example.org/reference.css`;
+Both native transformations accept `--iirds.language=de`. When omitted, they use
+the input root `xml:lang`, falling back to `en`. Available labels in another language
+remain a fallback when the requested vocabulary language has no matching label. The HTML reference accepts `--iirds.schema.css=https://example.org/reference.css`;
 this is a stylesheet URL, while `args.css` controls the DITA HTML5 publication.
 The bundled HTML reference stylesheet supplies usable light and dark defaults.
 

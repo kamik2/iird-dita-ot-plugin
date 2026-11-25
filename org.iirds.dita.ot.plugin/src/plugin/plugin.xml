@@ -1,6 +1,6 @@
 <plugin id="org.iirds.dita.package" version="1.2.0">
   <require plugin="org.dita.html5"/>
-  <require plugin="org.dita.base" version=">=4.4.2"/>
+  <require plugin="org.dita.base" version=">=4.4.1"/>
   <feature extension="dita.conductor.lib.import" file="lib/collection.jar"/>
   <feature extension="dita.conductor.lib.import" file="lib/commons-cli.jar"/>
   <feature extension="dita.conductor.lib.import" file="lib/commons-codec.jar"/>
@@ -24,6 +24,7 @@
   
   <!-- define iiRDS transformation: -->  
   <transtype name="iirds" extends="html5" desc="Creates an iiRDS publication package">
+    <param name="default.language" desc="Export language override; otherwise use input xml:lang, then en" type="string"/>
     <param name="iirds.metadata.file" desc="Absolute path to an additional RDF/XML metadata graph; urn:iirds:input and urn:iirds:package bind to generated resources" type="file"/>
     <param name="iirds.metadatahandler" desc="Plus character separated list of metadata handlers to be used to generate iiRDS metadata from DITA" type="string">
       <val default="all"/>
@@ -41,10 +42,10 @@
 
   <!-- Native RDF pipelines do not run DITA preprocessing. -->
   <transtype name="iirds-subjectscheme" desc="RDF/XML schema to a DITA subject scheme">
-    <param name="iirds.language" type="string" desc="Preferred vocabulary label language"/>
+    <param name="iirds.language" type="string" desc="Vocabulary language override; otherwise use input xml:lang, then en"/>
   </transtype>
   <transtype name="iirds-schema-html" desc="RDF/XML schema to an HTML vocabulary reference">
-    <param name="iirds.language" type="string" desc="Preferred vocabulary label language"/>
+    <param name="iirds.language" type="string" desc="Vocabulary language override; otherwise use input xml:lang, then en"/>
     <param name="iirds.schema.css" type="string" desc="URL of a project stylesheet for the RDF vocabulary reference"/>
   </transtype>
   

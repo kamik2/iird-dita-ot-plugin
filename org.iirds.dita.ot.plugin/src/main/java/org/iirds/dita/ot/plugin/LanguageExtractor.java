@@ -21,7 +21,7 @@ import org.iirds.dita.ot.plugin.model.ToCNode;
 import org.w3c.dom.Element;
 
 /**
- * Extract the language from the XML of a node and store it at the node.
+ * Extract the language using an export override, authored/inherited XML language, or English.
  * 
  * @author Martin Kreutzer, Empolis Information Management GmbH
  *
@@ -32,16 +32,19 @@ public class LanguageExtractor {
 	 * Extract the language from the element and store it at the node. It looks up
 	 * the {@code xml:lang} attribute at the element. If not present it inherits the
 	 * language from the {@link ToCNode#getParent() parent} node if available.
+	 * An explicit export language takes precedence; the final fallback is English.
 	 * 
 	 * @param node    the node to set determine the language for
 	 * @param element the XML element (usually the root element of the topic or map)
 	 */
 	public void extractLanguage(ToCNode node, Element element) {
-		if (node.getLanguage() == null) {
-			node.setLanguage(XMLUtils.getValue(element, "xml:lang"));
-		} else if (node.getParent() != null) {
-			node.setLanguage(node.getParent().getLanguage());
-		}
+        String override = Configuration.getDefault().getLanguageOverride();
+        String language = override != null ? override : XMLUtils.getValue(element, "xml:lang");
+        if (language == null || language.isBlank()) {
+            language = node.getParent() == null ? null : node.getParent().getLanguage();
+        }
+        if (language == null || language.isBlank()) language = Configuration.getDefault().getFallbackLanguage();
+        node.setLanguage(language.trim());
 	}
 
 }

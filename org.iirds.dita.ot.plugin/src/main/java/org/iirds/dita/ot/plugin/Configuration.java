@@ -74,6 +74,8 @@ public class Configuration {
 	private String iriHandlerNames = "default";
 	private String htmlExt = ".html";
 	private String contentPath = "content";
+    private String fallbackLanguage = "en";
+    private String languageOverride;
 	private VocabularyFactory vocabularyFactory;
 	private Model model;
 	private InfModel infModel;
@@ -97,6 +99,10 @@ public class Configuration {
 
 	void configureByInput(AbstractPipelineInput input) {
 		if (input != null) {
+            String language = input.getAttribute("LANGUAGE");
+            if (language != null && !language.isBlank()) fallbackLanguage = language.trim();
+            String override = input.getAttribute("LANGUAGEOVERRIDE");
+            if (override != null && !override.isBlank()) languageOverride = override.trim();
 			String ext = input.getAttribute(PARAM_OUTEXT);
 			if (!StringUtils.isBlank(ext)) {
 				logger.debug("HTML extension configured as " + ext);
@@ -270,7 +276,11 @@ public class Configuration {
 		return this.job;
 	}
 
-	public String getContentPath() {
+	public String getFallbackLanguage() { return fallbackLanguage; }
+
+    public String getLanguageOverride() { return languageOverride; }
+
+    public String getContentPath() {
 		return this.contentPath;
 	}
 

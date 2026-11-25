@@ -7,7 +7,7 @@ Version 1.2.0, local development build, November 2026
 * DITA-OT transtype: ``iirds``
 * Content is rendered as HTML5
 * Parameters of the ``html5`` transtype can be used to customize HTML output
-* Requires DITA-OT 4.4.2 and Java 17 or newer; runtime checks use DITA-OT 4.4.2 and Java 25.
+* Requires DITA-OT 4.4.1 or newer and Java 17 or newer; runtime checks use DITA-OT 4.4.2 and Java 25.
 
 For more information, visit [https://www.iirds.org/tools/dita-plugin/](https://www.iirds.org/tools/dita-plugin/)
 
@@ -74,7 +74,7 @@ Use the following dita command line optional parameters to influence the iiRDS t
 In iiRDS the following metadata are set:
 
 * The document type is set to "Operation Instructions"
-* title and language get always extracted from the DITA files and assigned as iiRDS metadata
+* Title is extracted from DITA. Language uses an explicit `default.language` export override, otherwise authored/inherited `xml:lang`, then `en`. Native RDF exports use `iirds.language` as the override, otherwise input root `xml:lang`, then `en`.
 * The topic types of topics are derived from the ``class`` attribute value of the respective topic
 
 

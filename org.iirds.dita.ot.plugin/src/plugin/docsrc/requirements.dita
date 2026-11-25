@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE reference PUBLIC "-//OASIS//DTD DITA Reference//EN" "reference.dtd">
 <reference id="requirements"><title>Requirements</title><refbody><section>
- <p>Local version 1.2.0 requires DITA-OT 4.4.2 or newer and Java 17 or newer.
- Runtime verification uses DITA-OT 4.4.2 with Java 25. Newer toolkits require fresh verification.</p>
+ <p>Local version 1.2.0 requires DITA-OT 4.4.1 or newer and Java 17 or newer.
+ Runtime verification uses standalone DITA-OT 4.4.2 and Oxygen 29's bundled DITA-OT 4.4.1 with Java 25. Newer toolkits require fresh verification.</p>
  <p>The Maven build uses the DOST 4.3.0 API artifact because this is the latest API
  artifact available on Maven Central. The runtime distribution tested is 4.4.2.</p>
- <p>Install the standalone plug-in ZIP into a chosen toolkit. Oxygen integration and
- custom host frameworks have not been tested as part of this local build.</p>
+ <p>Install the standalone plug-in ZIP into a chosen toolkit. Oxygen's bundled toolkit integration and command-line exports were tested. Oxygen Author/UI rendering and other custom host frameworks were not tested.</p>
 </section></refbody></reference>

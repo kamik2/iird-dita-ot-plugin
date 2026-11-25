@@ -12,7 +12,7 @@
  Use it for authoring metadata across domain boundaries. A generated scheme for an
  individual schema may refer to classes declared in Core; combine it with Core or
  use the complete manifest.</p>
- <p>Use <codeph>--iirds.language=de</codeph> for German labels. The default is English.
+ <p>Use <codeph>--iirds.language=de</codeph> for German labels. Without this parameter, the input root <codeph>xml:lang</codeph> is used, with <codeph>en</codeph> as the final fallback.
  SKOS preferred labels and definitions take precedence, with RDFS fallback.</p>
  <p>The separate <codeph>iirds-schema-html</codeph> native transformation produces
  <filepath>index.html</filepath> and <filepath>schema.css</filepath> for a readable

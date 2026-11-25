@@ -1,7 +1,7 @@
 # Transformation and parameter reference
 
-This README describes local plug-in **1.2.0**, **iiRDS 1.3**, and the installed
-**DITA-OT 4.4.2** parameter definitions. Names and enumerated values are case-sensitive.
+This README describes local plug-in **1.2.0**, **iiRDS 1.3**, and the inspected
+**DITA-OT 4.4.2** parameter definitions (also deployed on Oxygen's DITA-OT 4.4.1). Names and enumerated values are case-sensitive.
 It covers every transformation declared by this plug-in, every plug-in parameter,
 and all parameters declared by its HTML5 and common DITA-OT base descriptors.
 Other toolkit transformations such as `pdf` and `html5` are supplied by the host;
@@ -45,6 +45,28 @@ interchangeable across parameters. Paths in examples are placeholders to replace
 | `--debug` | Switch; no value | Off | Includes debug logging. |
 | `--filter` | Readable DITAVAL path; repeatable | None | Filters DITA content for `iirds`; native RDF transformations do not process DITAVAL. |
 | `--resource` | Readable DITA resource path; repeatable | None | Adds resource documents for `iirds`; native RDF transformations do not perform DITA key resolution. |
+
+## Language selection
+
+Language selection uses this order:
+
+1. A non-empty export parameter: `default.language` for `iirds`, or `iirds.language`
+   for the two native RDF transformations.
+2. The root `xml:lang` of the input topic, map, bookmap, RDF file, or schema manifest.
+3. `en` when that attribute is absent or blank.
+
+Without an explicit DITA export override, topics keep their own `xml:lang` and
+otherwise inherit the map/bookmap language. An explicit `default.language` overrides
+the generated document roots and iiRDS language metadata. It changes generated
+language settings; it does not translate authored text. Authored files are never
+rewritten. A native manifest supplies its own language context; the first referenced
+RDF file does not determine the manifest's language.
+
+For example, export a map with `xml:lang="de"` without any language parameter to
+select German automatically. Add `--default.language=fr` to explicitly select
+French language settings for its generated publication. In an Oxygen export
+scenario, leave the applicable language parameter unset for detection; a saved
+`en` value is an explicit override.
 
 ## `iirds`: publishing and metadata parameters
 
@@ -119,7 +141,7 @@ dita -i manual.ditamap -f iirds -o out/manual --iirds.contentpath=files --args.o
 
 | Parameter | Allowed values / value format | Default | Description |
 | --- | --- | --- | --- |
-| `iirds.language` | Exact XML language-tag string present in the vocabulary, for example `en` or `de`; other strings are accepted | `en` | Selects preferred labels and descriptions and sets output `xml:lang`. Matching is exact: `de-DE` does not automatically match `de`. |
+| `iirds.language` | Exact XML language-tag string present in the vocabulary, for example `en` or `de`; other strings are accepted | Input root `xml:lang`, then `en` | Overrides automatic language selection, selects preferred labels and descriptions, and sets output `xml:lang`. Matching is exact: `de-DE` does not automatically match `de`. |
 
 Labels prefer SKOS `prefLabel` in the requested language, then RDFS `label` in that
 language, then available SKOS/RDFS labels in another language, then an identifier.
@@ -140,7 +162,7 @@ dita -i C:/dita-ot/plugins/org.iirds.dita.package/schemas/iirds-1.3.xml -f iirds
 
 | Parameter | Allowed values / value format | Default | Description |
 | --- | --- | --- | --- |
-| `iirds.language` | Exact XML language-tag string such as `en` or `de`; other strings are accepted | `en` | Uses the same label/description selection as `iirds-subjectscheme` and sets the HTML `lang` value. Fixed page headings remain English. |
+| `iirds.language` | Exact XML language-tag string such as `en` or `de`; other strings are accepted | Input root `xml:lang`, then `en` | Overrides automatic detection and uses the same label/description selection as `iirds-subjectscheme` and sets the HTML `lang` value. Fixed page headings remain English. |
 | `iirds.schema.css` | Stylesheet URL or relative URL, for example `schema.css`, `styles/reference.css`, or `https://example.org/reference.css` | `schema.css` | Writes the value into the HTML stylesheet link. A custom file is not copied; make it available at that URL relative to `index.html`, or use a reachable absolute URL. The default `schema.css` is still written alongside the HTML. |
 
 `args.css`, `args.copycss`, `args.outext`, and other HTML5 publication parameters do
@@ -187,8 +209,8 @@ dita -i manual.ditamap -f iirds -o out/styled --args.css=project.css --args.cssr
 ```
 
 `args.css` and `iirds.schema.css` configure different output pipelines. Likewise,
-`default.language` is a DITA processing fallback and `iirds.language` selects native
-RDF vocabulary labels. They are not aliases.
+`default.language` selects the DITA publication language and `iirds.language`
+selects the native RDF vocabulary language. They are not aliases.
 
 ## `iirds`: inherited common DITA-OT parameters
 
@@ -228,7 +250,7 @@ do not add DITA preprocessing to the two native RDF transformations.
 | `generate-debug-attributes` | `true`: Enables generation of debugging attributes; `false`: Disables generation of debugging attributes | `true` | Specifies whether the @xtrf and @xtrc debugging attributes are generated in the temporary files. |
 | `processing-mode` | `strict`: When an error is encountered, DITA-OT stops processing; `lax`: When an error is encountered, DITA-OT attempts to recover from it; `skip`: When an error is encountered, DITA-OT continues processing but does not attempt error recovery | `lax` | Specifies how DITA-OT handles errors and error recovery. |
 | `conserve-memory` | `true`; `false` | `false` | Conserve memory at the expense of processing speed. |
-| `default.language` | Language tag such as `en`, `de`, or `en-US` | `en` | Supplies a DITA-OT fallback language when source language information is missing. This does not translate authored text or select native RDF reference labels. |
+| `default.language` | Non-empty language tag such as `en`, `de`, or `en-US` | Input root `xml:lang`, then `en` | For this plug-in, an explicit value overrides generated publication root languages and iiRDS language metadata. When omitted, language is detected from the input topic/map/bookmap. This does not translate authored text or select native RDF reference labels. |
 | `remove-broken-links` | `true`; `false` | `false` | Remove broken related links. |
 | `result.rewrite-rule.xsl` | Path to an XSLT filename-rewriting stylesheet | None | Customizes generated filenames. Custom rewriting has not been verified against the plug-in's rendition paths; check the resulting package before relying on it. |
 | `result.rewrite-rule.class` | Fully qualified Java class name available to the toolkit | None | Supplies a custom filename-rewriting class. Custom rewriting has not been verified against the plug-in's rendition paths. |
