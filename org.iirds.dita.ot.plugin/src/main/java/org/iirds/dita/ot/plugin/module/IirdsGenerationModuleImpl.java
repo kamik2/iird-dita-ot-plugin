@@ -61,7 +61,8 @@ public class IirdsGenerationModuleImpl extends AbstractPipelineModuleImpl {
 		mapReader.setLogger(logger);
 		mapReader.setJob(job);
 		try {
-			final Job.FileInfo in = job.getFileInfo(fi -> fi.isInput).iterator().next();
+			applyLanguageOverride();
+            final Job.FileInfo in = job.getFileInfo(fi -> fi.isInput).iterator().next();
 			final File inputFile = new File(job.tempDirURI.resolve(in.uri));
 			mapReader.read(inputFile, in.uri);
 			Model model = generateModel(mapReader.getToC());
@@ -81,6 +82,20 @@ public class IirdsGenerationModuleImpl extends AbstractPipelineModuleImpl {
 		}
 		return null;
 	}
+
+    /** Change generated roots in the temporary store only; never edit authored files. */
+    private void applyLanguageOverride() throws IOException {
+        String language = Configuration.getDefault().getLanguageOverride();
+        if (language == null) return;
+        for (Job.FileInfo file : job.getFileInfo()) {
+            if (!"dita".equals(file.format) && !"ditamap".equals(file.format)) continue;
+            java.net.URI uri = job.tempDirURI.resolve(file.uri);
+            if (!job.getStore().exists(uri)) continue;
+            org.w3c.dom.Document document = job.getStore().getDocument(uri);
+            document.getDocumentElement().setAttributeNS(javax.xml.XMLConstants.XML_NS_URI, "xml:lang", language);
+            job.getStore().writeDocument(document, uri);
+        }
+    }
 
 	protected Model generateModel(ToCNode toc) {
 		logger.info("Creating iiRDS model");

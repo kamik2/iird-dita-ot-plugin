@@ -20,6 +20,9 @@
 	<target name="dita2iirds" depends="dita2iirds.init, build-init, dita2html5, iirds.package" />
 
 	<target name="dita2iirds.init" description="initialize DITA to iiRDS transformation">
+        <!-- Read the source before build-init freezes the default language. -->
+        <taskdef name="iirds-input-language" classname="org.iirds.dita.ot.plugin.InputLanguageTask"/>
+        <iirds-input-language file="${args.input}"/>
 
 		<!-- set output directory for HTML transformations -->
 		<property name="temp.output.dir.name" value="html" />
@@ -76,6 +79,8 @@
 		<pipeline message="Extract iiRDS metadata" taskname="iirds.extractMetadata" inputmap="${user.input.file}">
 			<module class="org.iirds.dita.ot.plugin.module.IirdsGenerationModuleImpl" parallel="false">
 				<param name="transtype" value="${transtype}" />
+                <param name="LANGUAGE" value="${iirds.language.selected}" if:set="iirds.language.selected"/>
+                <param name="LANGUAGEOVERRIDE" value="${iirds.language.override}" if:set="iirds.language.override"/>
 				<param name="METADATAFILE" value="${iirds.metadata.file}" if:set="iirds.metadata.file"/>
 				<param name="METADATAHANDLERS" value="${iirds.metadatahandler}" if:set="iirds.metadatahandler" />
 				<param name="IRIHANDLERS" value="${iirds.irihandler}" if:set="iirds.irihandler" />
