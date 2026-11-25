@@ -16,6 +16,8 @@
 
 package org.iirds.dita.ot.plugin;
 
+// Local modifications (2026): Reset taxonomy registrations for each publication.
+
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,6 +80,7 @@ public class Configuration {
 
 	private Configuration(Job job, AbstractPipelineInput input) {
 		singleton = this;
+		org.iirds.dita.ot.plugin.model.SubjectDefinitions.reset();
 		this.job = job;
 		this.topicTypeMapper = new TopicTypeMapper();
 		this.iriHandler = null;

@@ -15,6 +15,8 @@
  ******************************************************************************/
 package org.iirds.dita.ot.plugin.contrib;
 
+// Local modifications (2026): Map authored topic-type instances.
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -219,6 +221,9 @@ public class SubjectSchemeDataMetadataHandler implements IirdsMetadataHandler {
 							} else if (isType(clazz, IirdsConstants.DOCUMENTTYPE_CLASS_URI)) {
 								InformationUnits.addDocumentType(infoUnit, res);
 								logger.info("Seting document type at " + root.getTitle());
+								break;
+							} else if (isType(clazz, IirdsConstants.TOPICTYPE_CLASS_URI)) {
+								infoUnit.addProperty(model.createProperty(IirdsConstants.iiRDS_URI + "has-topic-type"), res);
 								break;
 							} else if (isType(clazz, IirdsConstants.DOCUMENTCATEGORY_CLASS_URI)) {
 								logger.info("Setting document categtory at " + root.getTitle());

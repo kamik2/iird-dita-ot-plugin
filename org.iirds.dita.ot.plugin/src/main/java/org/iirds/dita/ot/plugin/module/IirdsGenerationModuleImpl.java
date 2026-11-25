@@ -16,10 +16,14 @@
 
 package org.iirds.dita.ot.plugin.module;
 
+// Local modifications (2026): Merge explicit RDF metadata and write UTF-8 output.
+
 import static org.dita.dost.util.Constants.ANT_INVOKER_EXT_PARAM_TRANSTYPE;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -61,6 +65,14 @@ public class IirdsGenerationModuleImpl extends AbstractPipelineModuleImpl {
 			final File inputFile = new File(job.tempDirURI.resolve(in.uri));
 			mapReader.read(inputFile, in.uri);
 			Model model = generateModel(mapReader.getToC());
+			String overlay = input.getAttribute("METADATAFILE");
+			if (overlay != null && !overlay.isBlank()) {
+				Model extra = org.iirds.rdf.RDFConstants.readModels(new File(overlay).toURI().toURL());
+				try {
+					org.iirds.rdf.MetadataOverlay.merge(model, extra, mapReader.getToC().getInformationUnit(),
+						org.iirds.rdf.facade.InformationUnits.getPackages(model).get(0));
+				} finally { extra.close(); }
+			}
 			generateRDF(model);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +104,7 @@ public class IirdsGenerationModuleImpl extends AbstractPipelineModuleImpl {
 
 		logger.info("Saving iiRDS model to file to " + rdfFile);
 		metainfDir.mkdirs();
-		try (FileWriter writer = new FileWriter(rdfFile)) {
+		try (BufferedWriter writer = Files.newBufferedWriter(rdfFile.toPath(), StandardCharsets.UTF_8)) {
 			serializer.generateRDFXML(model, writer);
 			writer.flush();
 		} catch (IOException e) {
