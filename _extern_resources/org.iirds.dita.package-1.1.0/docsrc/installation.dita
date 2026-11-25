@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="installation">
+    <title>Install the iiRDS plugin</title>
+    <shortdesc>The iiRDS plugin can be installed offline from a ZIP archive or online from the
+        DITA-OT registry or the <xref href="https://iirds.org" format="html" scope="external"
+            >https://iirds.org</xref> website. </shortdesc>
+    <conbody>
+        <p>Plugin installation is described in the documentation of DITA-OT. Follow the installation
+            instructions for your version of DITA-OT to install the plugin. </p>
+    </conbody>
+    <related-links>
+        <link href="https://www.dita-ot.org/4.3/topics/plugins-installing" format="html"
+            scope="external"/>
+    </related-links>
+</concept>

@@ -1,0 +1,8 @@
+org.dita.dost.util
+org.iirds.dita.ot.plugin
+org.iirds.dita.ot.plugin.contrib
+org.iirds.dita.ot.plugin.model
+org.iirds.dita.ot.plugin.module
+org.iirds.dita.ot.plugin.spi
+org.iirds.rdf
+org.iirds.rdf.facade
