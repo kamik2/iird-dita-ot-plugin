@@ -15,6 +15,8 @@
  ******************************************************************************/
 package org.iirds.dita.ot.plugin.model;
 
+// Local modifications (2026): Allow per-publication taxonomy state reset.
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +36,10 @@ public class SubjectDefinitions {
 	List<SubjectDef> subjectdefs = new ArrayList<>();
 
 	Map<String, SubjectDef> keysToSubjectsdefs = new HashMap<>();
+
+	public static void reset() {
+		defaultDefinitions = new SubjectDefinitions();
+	}
 
 	public static SubjectDefinitions getDefault() {
 		return defaultDefinitions;

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="operation" xml:lang="en"><title>Using the controller</title>
+ <shortdesc>Example metadata from the iiRDS Core, Machinery, and Software domains.</shortdesc>
+ <prolog><metadata><data keyref="iirds.Operation"/><data keyref="iirdsMch.FirstUse"/><data keyref="iirdsSft.Deployment"/></metadata></prolog>
+ <conbody><p>Switch on the controller and deploy the configured application.</p></conbody>
+</concept>

@@ -16,6 +16,8 @@
 
 package org.iirds.rdf;
 
+// Local modifications (2026): Load SKOS annotations with the four structural schemas.
+
 import static org.iirds.rdf.IirdsConstants.*;
 
 import java.net.URL;
@@ -40,6 +42,7 @@ public final class RDFConstants {
 	private static final String RDFS_PATH_CORE = "/iirds-core.rdf";
 	private static final String RDFS_PATH_SOFTWARE = "/iirds-software.rdf";
 	private static final String RDFS_PATH_MACHINERY = "/iirds-machinery.rdf";
+	private static final String RDFS_PATH_SKOS = "/iirds-skos.rdf";
 	private static final String RDFS_PATH_HANDOVER = "/iirds-handover.rdf";
 
 	private static final Model iiRDS_MODEL = createDefaultModel();
@@ -126,11 +129,12 @@ public final class RDFConstants {
 			URL url_core = IirdsConstants.class.getResource(RDFS_PATH_CORE);
 			URL url_sw = IirdsConstants.class.getResource(RDFS_PATH_SOFTWARE);
 			URL url_mc = IirdsConstants.class.getResource(RDFS_PATH_MACHINERY);
+			URL url_sk = IirdsConstants.class.getResource(RDFS_PATH_SKOS);
 			URL url_ho = IirdsConstants.class.getResource(RDFS_PATH_HANDOVER);
-			if (url_core == null || url_sw == null || url_mc == null || url_ho == null) {
+			if (url_core == null || url_sw == null || url_mc == null || url_ho == null || url_sk == null) {
 				throw new IllegalStateException("RDF schemes not found in class path");
 			}
-			Model model = readModels(url_core, url_sw, url_mc, url_ho);
+			Model model = readModels(url_core, url_sw, url_mc, url_ho, url_sk);
 			rdfsModel = model;
 		}
 		return rdfsModel;

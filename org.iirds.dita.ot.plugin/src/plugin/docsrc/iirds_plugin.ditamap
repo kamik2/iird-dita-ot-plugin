@@ -6,7 +6,7 @@
         <author>tekom Deutschland e.V.</author>
         <critdates>
             <created date="2024-02-15"/>
-            <revised modified="2026-07-28"/>
+            <revised modified="2026-11-25"/>
         </critdates>
         <prodinfo>
             <prodname>iiRDS Plugin for the DITA Open Toolkit </prodname>
@@ -14,6 +14,7 @@
                 <vrm version="1.0.0" release="2024-03"/>
                 <vrm version="1.0.1" release="2025-10"/>
                 <vrm version="1.1.0" release="2026-08"/>
+                <vrm version="1.2.0" release="local-2026-11"/>
             </vrmlist>
         </prodinfo>
         <!-- Subject scheme-based metadata, for basic testing of the subjectscheme metadata handler: -->

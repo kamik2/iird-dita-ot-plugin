@@ -2,12 +2,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.iirds.dita.ot</groupId>
 	<artifactId>org.iirds.dita.package</artifactId>
-	<version>1.1.0</version>
+	<version>1.2.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		<dita-ot.version>3.7.3</dita-ot.version>
+		<iirds.build.directory>${project.basedir}/target</iirds.build.directory>
+		<maven.compiler.source>17</maven.compiler.source>
+		<maven.compiler.target>17</maven.compiler.target>
+		<!-- Latest API artifact on Maven Central; runtime verified separately on 4.4.2. -->
+		<dita-ot.version>4.3.0</dita-ot.version>
 		<jena.version>3.17.0</jena.version>
 		<slf4j.version>1.7.32</slf4j.version>
 		<saxon.version>10.6</saxon.version>
@@ -17,7 +19,15 @@
 		<maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
 	</properties>
 	<build>
+		<directory>${iirds.build.directory}</directory>
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.14.1</version>
+				<configuration><release>17</release></configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -65,10 +75,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.7.1</version>
 				<configuration>
 					<appendAssemblyId>false</appendAssemblyId>
 					<finalName>org.iirds.dita.package-${project.version}</finalName>
-					<descriptor>src/assemble/assembly.xml</descriptor>
+					<descriptors><descriptor>src/assemble/assembly.xml</descriptor></descriptors>
 				</configuration>
 				<executions>
 					<execution>
